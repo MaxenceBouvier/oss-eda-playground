@@ -152,7 +152,8 @@ RUN uv pip install transformers[torch] \
     sentencepiece \
     huggingface_hub[cli] \
     safetensors \
-    einops
+    einops\
+    pre-commit
     # uvicorn fastapi \
     # bitsandbytes \
     # peft \
