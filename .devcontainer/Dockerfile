@@ -164,7 +164,7 @@ ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
 # All missing installs
-RUN apt-get install -y openssh-server
+RUN apt-get update -y && apt-get install -y openssh-server
 
 USER $USERNAME
 
