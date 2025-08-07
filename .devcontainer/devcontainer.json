@@ -1,0 +1,25 @@
+{
+  "name": "AI x OSS EDA",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "remoteUser": "vscode",
+  // "updateRemoteUserUID": true,
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    // "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mhutchie.git-graph",
+        "streetsidesoftware.code-spell-checker",
+      ]
+    }
+  }
+}
