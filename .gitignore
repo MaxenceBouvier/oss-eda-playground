@@ -62,7 +62,7 @@ env.bak/
 venv.bak/
 
 # Editor directories and files
-.vscode/
+# .vscode/
 .idea/
 *.sublime-*
 *.swp

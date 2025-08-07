@@ -22,6 +22,11 @@
       "extensions": [
         "mhutchie.git-graph",
         "streetsidesoftware.code-spell-checker",
+        "AndrewNolte.vscode-system-verilog",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-python.vscode-python-envs"
       ]
     }
   }

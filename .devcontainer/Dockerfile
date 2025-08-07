@@ -118,9 +118,13 @@ ENV PATH=$PATH:/prog/yosys/bin
 # WORKDIR /prog/trace2power
 # RUN git checkout 74949-glitch-power && cargo install --path .
 
-FROM yosys AS env_setup
+FROM yosys AS slang
+RUN git clone https://github.com/MikePopoloski/slang.git /prog/slang
+WORKDIR /prog/slang
+RUN cmake -B build && cmake --build build -j
+ENV PATH=$PATH:/prog/slang/build/bin
 
-
+FROM slang AS env_setup
 # Enable Git LFS for large model files
 RUN git lfs install --system
 
