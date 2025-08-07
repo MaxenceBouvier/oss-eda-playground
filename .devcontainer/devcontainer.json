@@ -8,8 +8,11 @@
   // "updateRemoteUserUID": true,
   "workspaceFolder": "/workspace",
   "mounts": [
-    // "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "source=${localWorkspaceFolder},target=/workspace,type=bind",
     "source=${env:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  "runArgs": [
+    "--gpus=all"
   ],
   "remoteEnv": {
     "SSH_AUTH_SOCK": "/ssh-agent"

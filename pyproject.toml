@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling", "hatch-requirements-txt"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai_poe"
+dynamic = [
+    "dependencies"
+]
+version = "0.0.0"
+authors = [
+    { name="Maxence Bouvier", email="maxence.bouvier.pro@gmail.com" },
+]
+description = """
+A package for playing with AI and Open Source EDA Tools.
+Comes with a docker container.
+"""
+readme = "README.md"
+requires-python = ">=3.13"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_poe"]
+
+[project.scripts]
+main = "ai_poe.main:main"
+
+[tool.black]
+line-length=120
+
+[tool.ruff]
+line-length=120
+
+[tool.hatch.metadata.hooks.requirements_txt]
+files = ["requirements.txt"]
+
+
+
