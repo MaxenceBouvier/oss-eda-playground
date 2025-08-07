@@ -118,13 +118,39 @@ ENV PATH=$PATH:/prog/yosys/bin
 # WORKDIR /prog/trace2power
 # RUN git checkout 74949-glitch-power && cargo install --path .
 
-FROM yosys AS slang
+FROM yosys AS vhdl_tooling
+# Install Slang
 RUN git clone https://github.com/MikePopoloski/slang.git /prog/slang
 WORKDIR /prog/slang
 RUN cmake -B build && cmake --build build -j
 ENV PATH=$PATH:/prog/slang/build/bin
 
-FROM slang AS env_setup
+# Install Ctags
+RUN git clone https://github.com/universal-ctags/ctags.git  /prog/ctags
+WORKDIR /prog/ctags
+RUN ./autogen.sh && ./configure  && make && make install
+
+
+FROM vhdl_tooling as bazel
+# Install Bazel
+RUN apt install -y apt-transport-https gnupg\
+         gnupg \
+    && curl -fsSL https://bazel.build/bazel-release.pub.gpg \
+        | gpg --dearmor -o /usr/share/keyrings/bazel-archive-keyring.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" \
+        > /etc/apt/sources.list.d/bazel.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends bazel-7.6.0 \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM bazel as verible
+## Install Verible
+RUN git clone https://github.com/chipsalliance/verible.git /prog/verible
+WORKDIR /prog/verible
+RUN bazel-7.6.0 build -c opt :install-binaries && .github/bin/simple-install.sh /prog/verible/bin && chown -R $USERNAME /prog/verible/bin
+
+
+FROM verible AS env_setup
 # Enable Git LFS for large model files
 RUN git lfs install --system
 
