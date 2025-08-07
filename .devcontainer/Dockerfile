@@ -133,6 +133,9 @@ ENV HF_HUB_ENABLE_HF_TRANSFER=1
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
+# All missing installs
+RUN apt-get install -y openssh-server
+
 USER $USERNAME
 
 FROM env_setup AS python_313
